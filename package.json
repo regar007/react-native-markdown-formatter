@@ -1,7 +1,7 @@
 
 {
   "name": "react-native-markdown-formatter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This is a react-native library to apply desired regex to plain text.",
   "main": "src/index.js",
   "files":[
@@ -20,6 +20,10 @@
   ],
   "author": "Ashok Regar",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/regar007/react-native-markdown-formatter",
+    "type": "git"
+  },
   "peerDependencies": {
     "react-native": "^0.41.2",
     "react-native-windows": "0.41.0-rc.1",

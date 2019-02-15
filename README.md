@@ -96,4 +96,4 @@ let text = "This _is_ **Bold_italic_** text, This is **_Italic within Bold_** te
 
 The above usage renders in following way:
 
-![example](https://github.com/regar007/react-native-markdown-formatter/blob/master/example.png)
+![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example.png)

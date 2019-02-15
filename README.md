@@ -25,29 +25,54 @@ Import RNMarkdownFormatter from 'react-native-markdown-formatter':
 In your `Component`'s `render()` method you can then render markdown via JSX e.g.
 
 ```js
-var markdownFormatterRegex = [
+// formatter pattern configs
+MD_FORMATTER_CONFIG = [
+	{
+		type: 'numbered',
+		styles: [],
+		pattern: ["\\d.", '\\r'],
+		patternType: 'start-end',
+		groups: 1,
+	},  
+	{
+		type: 'bullet',
+		styles: [],
+		pattern: ['-', '\\r'],
+		patternType: 'start-end',
+		groups: 1,
+	},  
 	{
 		type: 'bold',
 		styles: [styles.boldText],
-		pattern: '**',
+		pattern: ['**'],
 		patternType: 'symmetric',
-		groups: 1, 
+		groups: 1,
 	},
 	{
 		type: 'italic',
 		styles: [styles.italicText],
-		pattern: '_',
+		pattern: ['_'],
 		patternType: 'symmetric',
-		groups: 1,              
-	},            
+		groups: 1,
+	},
 	{
 		type: 'hyperlink',
 		styles: [styles.hyperlinkText],
-		pattern: '[]()',
+		pattern: ['[]()'],
 		patternType: 'asymmetric',
-		groups: 2,              
-	},            
+		groups: 2,
+	},
 ];
+
+// user custom config
+var markdownFormatterRegex = [{
+		type: 'bullet',
+		styles: [styles.bulletText],
+		pattern: ['\-(.*?[^\\r]+)'],
+		patternType: 'custom',
+		groups: 1,
+}];
+
 
 //TextBlock styles
 let textBlockComputedStyle = [];
@@ -71,4 +96,4 @@ let text = "This _is_ **Bold_italic_** text, This is **_Italic within Bold_** te
 
 The above usage renders in following way:
 
-![example](https://github.com/regar007/react-native-markdown-formatter/example.png)
+![example](https://github.com/regar007/react-native-markdown-formatter/blob/master/example.png)

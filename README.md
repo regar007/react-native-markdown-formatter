@@ -9,7 +9,7 @@ Install the node module:
 
 or with npm:
 
-`npm install --save eact-native-markdown-formatter`
+`npm install --save react-native-markdown-formatter`
 
 Then see Usage for futher details
 

@@ -81,7 +81,7 @@ textBlockComputedStyle.push({
 	color: "red",
 });
 
-let text = "This _is_ **Bold_italic_** text, This is **_Italic within Bold_** text (bold italic text), This is more than one hyperlink text => [Adaptive Cards](http://adaptivecards.io) [Adaptive Cards](http://adaptivecards.io), This is a bullet list - Item 1\r- Item 2\r- Item 3\r";
+let text = "This _is_ **Bold_italic_** text, This is **_Italic within Bold_** text (bold italic text), This is more than one hyperlink text => [Adaptive Cards](http://adaptivecards.io) [Adaptive Cards](http://adaptivecards.io), This is a bullet list - Item 1\r- Item 2\r- Item 3\r sdfhjkk ashok sdf 1. Green\r2. Orange\r3. Blue .767 : sdfj\r jkkkkkkkk sdfhjkk ashok sdf 1. Green\r2. Orange\r3. Blue .767 : sdfj\r";
 
 ```
 ```jsx

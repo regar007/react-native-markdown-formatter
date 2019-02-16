@@ -61,7 +61,7 @@ MD_FORMATTER_CONFIG = [
 	},
 ];
 
-// user custom config to be added/replaced to default configs
+// user custom config to be added to default configs
 var markdownFormatterRegex = [{
 		type: 'bullet', // this will replace the default bullet config with user specified config.
 		styles: [styles.bulletText],

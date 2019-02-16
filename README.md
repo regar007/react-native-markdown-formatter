@@ -17,15 +17,12 @@ Then see Usage for futher details
 
 ```javascript
 import RNMarkdownFormatter from 'react-native-markdown-formatter';
-
-Import RNMarkdownFormatter from 'react-native-markdown-formatter':
-
 ```
 
 In your `Component`'s `render()` method you can then render markdown via JSX e.g.
 
 ```js
-// formatter pattern configs
+// formatter default pattern configs
 MD_FORMATTER_CONFIG = [
 	{
 		type: 'numbered',
@@ -64,15 +61,14 @@ MD_FORMATTER_CONFIG = [
 	},
 ];
 
-// user custom config
+// user custom config to be added/replaced to default configs
 var markdownFormatterRegex = [{
-		type: 'bullet',
+		type: 'bullet', // this will replace the default bullet config with user specified config.
 		styles: [styles.bulletText],
-		pattern: ['\-(.*?[^\\r]+)'],
+		pattern: ['\-(?= )(.*?)\\r'],
 		patternType: 'custom',
 		groups: 1,
 }];
-
 
 //TextBlock styles
 let textBlockComputedStyle = [];
@@ -81,11 +77,11 @@ textBlockComputedStyle.push({
 	color: "red",
 });
 
-let text = "This _is_ **Bold_italic_** text, This is **_Italic within Bold_** text (bold italic text), This is more than one hyperlink text => [Adaptive Cards](http://adaptivecards.io) [Adaptive Cards](http://adaptivecards.io), This is a bullet list - Item 1\r- Item 2\r- Item 3\r sdfhjkk ashok sdf 1. Green\r2. Orange\r3. Blue .767 : sdfj\r jkkkkkkkk sdfhjkk ashok sdf 1. Green\r2. Orange\r3. Blue .767 : sdfj\r";
+let text = "This is _italic_ and **Bold_italic_** text, This is **_Italic within Bold_** text (bold italic text), This is more than one hyperlink text => [Adaptive Cards](http://adaptivecards.io),  [**Adaptive** Cards 2](http://adaptivecards.io), This is a bullet list - Item 1\r- Item 2\r- Item 3\r This is a numbered list 1. Green\r2. Orange\r3. Blue\r One more list 1. One-1\r2. Two: 2\r3. Three 3.0\r ";
 
 ```
 ```jsx
-<MarkdownFormatter 
+<RNMarkdownFormatter 
 	defaultStyles={textBlockComputedStyle} 
 	numberOfLines={numberOfLines} // 1 or 0
 	text={text} 

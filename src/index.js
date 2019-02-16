@@ -1,5 +1,5 @@
 /**
- * Markdown Formatter.
+ * React Native Markdown Formatter.
  */
 
 import React from 'react';
@@ -80,8 +80,17 @@ export default class MarkdownFormatter extends React.Component {
 		this.numberOfLines = props.numberOfLines;
 		this.text = props.text;
 
-        this.regexArray = this.MD_FORMATTER_CONFIG.concat(props.regexArray);
-        
+		// prefer user configs
+		for(var i = 0; i < this.MD_FORMATTER_CONFIG.length; i++){
+			for(var j =0; j < props.regexArray.length; j++){
+				if(this.MD_FORMATTER_CONFIG[i].type == props.regexArray[j].type){
+					this.MD_FORMATTER_CONFIG[i] = props.regexArray[j];
+					props.regexArray.splice(j, 1);
+					continue;					
+				}
+			}
+		}
+		this.regexArray = this.MD_FORMATTER_CONFIG.concat(props.regexArray);        
 
 		// extracted regex
 		this.patterns = [];
@@ -98,7 +107,7 @@ export default class MarkdownFormatter extends React.Component {
                 pattern = pattern[0];
             }
             if(patternType === "start-end"){ 
-                pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '(.*?)' + pattern[1].replace(SPECIAL_CHAR_REGEX, "\\$&");
+                pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '(?= )(.*?)' + pattern[1].replace(SPECIAL_CHAR_REGEX, "\\$&");
             }else if(patternType == "symmetric"){
                 pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '(.*?)' + pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&");    
             }else if(patternType == "asymmetric"){                

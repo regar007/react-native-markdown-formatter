@@ -186,7 +186,7 @@ const EightRoute = () => (
 			defaultStyles={[styles.markdown]}
 			numberOfLines={0} // 1 or 0
 			text={exampleTexts[7]}
-			regexArray={markdownFormatterRegex} />
+			regexArray={[]} />
 	</View>
 );
 
@@ -201,8 +201,8 @@ export default class App extends React.Component {
 	state = {
 		index: 5,
 		routes: [
-			{ key: 'first', title: 'Bold' },
-			{ key: 'second', title: 'Italic' },
+			{ key: 'first', title: 'Italic' },
+			{ key: 'second', title: 'Bold' },
 			{ key: 'third', title: 'Hyperlink' },
 			{ key: 'fourth', title: 'Bullet' },
 			{ key: 'fifth', title: 'Numbered' },

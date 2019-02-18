@@ -13,7 +13,19 @@ or with npm:
 
 Then see Usage for futher details
 
+## Example
+
+```
+cd MarkdownFormatter
+
+npm install
+
+react-native run-android/run-ios
+
+```
+
 ## Usage
+
 
 ```javascript
 import RNMarkdownFormatter from 'react-native-markdown-formatter';
@@ -61,11 +73,12 @@ MD_FORMATTER_CONFIG = [
 	},
 ];
 
+User can send their custom regex also to aply on text
 // user custom config to be added to default configs
-var markdownFormatterRegex = [{
+var customMarkdownFormatterRegex = [{
 		type: 'bullet', // this will replace the default bullet config with user specified config.
-		styles: [styles.bulletText],
-		pattern: ['\-(?= )(.*?)\\r'],
+		styles: [],
+		pattern: ['\\$(?= )(.*?)\\r'],
 		patternType: 'custom',
 		groups: 1,
 }];
@@ -73,23 +86,31 @@ var markdownFormatterRegex = [{
 //TextBlock styles
 let textBlockComputedStyle = [];
 textBlockComputedStyle.push({
-	fontSize: 14,
-	color: "red",
-});
+	fontSize: 24,
+	margin: 10,
+	alignItems: 'flex-start'
+);
 
-let text = "This is _italic_ and **Bold_italic_** text, This is **_Italic within Bold_** text (bold italic text), This is more than one hyperlink text => [Adaptive Cards](http://adaptivecards.io),  [**Adaptive** Cards 2](http://adaptivecards.io), This is a bullet list - Item **1** 1\r- _Item_ 2 2\r- Item 3\r This is a numbered list 1. _Green_\r2. Orange\r3. Blue\r One more list 1. One-1\r2. Two: 2\r3. **Three** 3.0\r ";
-
+let exampleTexts = [
+	"This is a _Italic_ text",
+	"This is a **Bold** text",
+	"This is a [Adaptive Cards](http://adaptivecards.io) hyperlink text",
+	"This is a **bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r ",
+	"This is a _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
+	"This is a custom markdown for bullet list $ Item **1**.1\r$ Item _2.2_\r$ Item 3\r ",
+	"This is a mixed **_bold/italic_** which also supports **_Type_One** _Type**Two**_ text",
+	"This is a mixed lists \n**bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r and _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
+];
 ```
 ```jsx
 <RNMarkdownFormatter 
 	defaultStyles={textBlockComputedStyle} 
-	numberOfLines={numberOfLines} // 1 or 0
-	text={text} 
-	regexArray={markdownFormatterRegex}/>
+	numberOfLines={0} // 1(no wrap text) or 0(wrap text)
+	text={exampleText[5]} 
+	regexArray={customMarkdownFormatterRegex}/>
 
 ```
-  
 
-The above usage renders in following way:
+### The above usage renders in following way:
 
-![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.png)
+![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.gif)

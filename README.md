@@ -92,4 +92,4 @@ let text = "This is _italic_ and **Bold_italic_** text, This is **_Italic within
 
 The above usage renders in following way:
 
-![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example.png)
+![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.png)

@@ -11,11 +11,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-BOLD_REGEX = RegExp('\\*\\*([^*]+)\\*\\*');
-ITALIC_REGEX = RegExp('\\_([^_]+)\\_');
-HYPERLINK_REGEX = RegExp('\\[([^\\[]+)\\]\\(([^\\)])\\)');
-BULLET_REGEX = RegExp('\\-(.*?[^\\r]+)', 'ig');
-SPECIAL_CHAR_REGEX = new RegExp("[^a-z\\\\s\\d]", 'gi');
+let SPECIAL_CHAR_REGEX = new RegExp("[^a-z\\\\s\\d]", 'gi');
 
 export default class MarkdownFormatter extends React.Component {
 
@@ -158,10 +154,8 @@ export default class MarkdownFormatter extends React.Component {
 			this.matchesStyleTypes.push(type + "Text");
             this.matchesStyles.push(styles);
       
-            if (type === 'xs') {
-                let swap = parsed[0];
-				parsed[0] = parsed[1];
-                parsed[1] = swap;
+            if (type === 'bullet') {
+                parsed[1] = '\u2022 ' + parsed[1];
             }
             this.matchesFound.push(parsed);
 
@@ -285,22 +279,42 @@ export default class MarkdownFormatter extends React.Component {
 
 	createJsx = function (elementJsxArray, elementStylesArray, elementLinksArray) {
 		// create jsx element 
+		var tempJSX = [];
 		var partialJsx = [];
-        var fullJsx = [];
+		var WrapJsx = [];
+		var fullJsx = [];
 		elementJsxArray.map((eachWord, index) => {
 			let key = 'text_' + index;
 
 			if (elementStylesArray[index].indexOf('bulletText') !== -1 || elementStylesArray[index].indexOf('numberedText') !== -1) {
-                if(elementStylesArray[index].indexOf('bulletText') !== -1){
-                    eachWord = '\u2022 ' + eachWord;
+                if(elementStylesArray[index].indexOf('bulletText') === 0){
+                    // eachWord = '\u2022 ' + eachWord;
                 }
-				fullJsx.push(<Text key={key + partialJsx.length + "_list"} style={this.state.userStyles} numberOfLines={this.numberOfLines}>{partialJsx}</Text>);
-				fullJsx.push(<View key={key + "_list"} style={this.state.userStyles}><Text key={'list_item_' + index} style={[styles.textBlock].concat(elementStylesArray[index])}>{eachWord}</Text></View>)
-				partialJsx = [];
+				tempJSX.push(<Text key={'list_item_' + index} style={this.state.userStyles.concat(elementStylesArray[index])}>{eachWord}</Text>)
             } else {                
-                partialJsx.push(<Text key={key} style={elementStylesArray[index]} onPress={() => this.addOnPress(elementLinksArray[index])}>{eachWord}</Text>)
+                tempJSX.push(<Text key={key} style={elementStylesArray[index]} onPress={() => this.addOnPress(elementLinksArray[index])}>{eachWord}</Text>)
 			}
 		});
+
+		elementJsxArray.map((eachWord, index) => {
+			let key = 'text_' + index;
+			if (elementStylesArray[index].indexOf('bulletText') !== -1 || elementStylesArray[index].indexOf('numberedText') !== -1) {
+				if(WrapJsx.length !== 0){
+					fullJsx.push(<Text key={key + partialJsx.length + "_list"} style={this.state.userStyles} >{WrapJsx}</Text>);
+					WrapJsx = [];
+				}
+				partialJsx.push(tempJSX[index]);
+
+			} else { 
+				if(partialJsx.length !== 0){ 	              
+					fullJsx.push(<View key={key + "_list"} style={this.state.userStyles}><Text key={key + partialJsx.length + "_list"}>{partialJsx}</Text></View>);
+					partialJsx = [];
+				}
+				if(eachWord.trim() != "")
+					WrapJsx.push(tempJSX[index]);
+			}
+		});
+		
 		if (fullJsx.length === 0) {
 			fullJsx = <Text key={'text_' + fullJsx.length + partialJsx.length} style={this.state.userStyles} numberOfLines={this.numberOfLines}>{partialJsx}</Text>;
 		} else if (partialJsx.length !== 0) {
@@ -373,8 +387,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 	},
 	textBlock: {
-		flexDirection: 'row',
-		left: 10
+		left: 10,
 	},
 	hyperlinkText: {
 		color: 'blue',

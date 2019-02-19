@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-let SPECIAL_CHAR_REGEX = new RegExp("[^a-z\\\\s\\d]", 'gi');
+let SPECIAL_CHAR_REGEX = new RegExp("[^|a-z\\\\s\\d]", 'gi');
 
 export default class MarkdownFormatter extends React.Component {
 
@@ -26,14 +26,14 @@ export default class MarkdownFormatter extends React.Component {
         {
             type: 'numbered',
             styles: [],
-            pattern: ["\\d.", '\\r'],
+            pattern: ["\\d.", '\\r|\\n'],
             patternType: 'start-end',
             groups: 1,
         },  
         {
             type: 'bullet',
             styles: [],
-            pattern: ['-', '\\r'],
+            pattern: ['-', '\\r|\\n'],
             patternType: 'start-end',
             groups: 1,
         },  
@@ -70,23 +70,24 @@ export default class MarkdownFormatter extends React.Component {
 		super(props);
 
 		// props
-		this.state = {
-			userStyles: props.defaultStyles
-		}
-		this.numberOfLines = props.numberOfLines;
 		this.text = props.text;
+		this.state = {
+			userStyles: props.defaultStyles || []
+		}
+		this.numberOfLines = props.numberOfLines || 0;
+		this.regexArray = props.regexArray || [];
 
 		// prefer user configs
 		for(var i = 0; i < this.MD_FORMATTER_CONFIG.length; i++){
-			for(var j =0; j < props.regexArray.length; j++){
-				if(this.MD_FORMATTER_CONFIG[i].type == props.regexArray[j].type){
-					this.MD_FORMATTER_CONFIG[i] = props.regexArray[j];
-					props.regexArray.splice(j, 1);
+			for(var j =0; j < this.regexArray.length; j++){
+				if(this.MD_FORMATTER_CONFIG[i].type == this.regexArray[j].type){
+					this.MD_FORMATTER_CONFIG[i] = this.regexArray[j];
+					this.regexArray.splice(j, 1);
 					continue;					
 				}
 			}
 		}
-		this.regexArray = this.MD_FORMATTER_CONFIG.concat(props.regexArray);        
+		this.regexArray = this.MD_FORMATTER_CONFIG.concat(this.regexArray);        
 
 		// extracted regex
 		this.patterns = [];
@@ -103,7 +104,7 @@ export default class MarkdownFormatter extends React.Component {
                 pattern = pattern[0];
             }
             if(patternType === "start-end"){ 
-                pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '(?= )(.*?)' + pattern[1].replace(SPECIAL_CHAR_REGEX, "\\$&");
+                pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '[\\s+](.*?)[' + pattern[1].replace(SPECIAL_CHAR_REGEX, "\\$&")+ "]";
             }else if(patternType == "symmetric"){
                 pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '(.*?)' + pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&");    
             }else if(patternType == "asymmetric"){                
@@ -128,13 +129,14 @@ export default class MarkdownFormatter extends React.Component {
             this.patterns[i] = RegExp(pattern, 'ig');
 			this.styles[i] = this.regexArray[i].styles;
 			this.styleTypes[i] = this.regexArray[i].type;
+			this.patternTypes[i] = patternType;
 		}
 	}
 
 	render() {
 		text = this.text;
 		for (var i = 0; i <= this.styleTypes.length - 1; i++) {
-			console.log("patternType: ", this.patternTypes[i]);
+			console.log("patternType: ", this.patternTypes[i], " || pattern ", this.patterns[i]);			
 			this.parseText(text, this.styleTypes[i], this.styles[i], this.patterns[i]);
 		}
 
@@ -144,7 +146,10 @@ export default class MarkdownFormatter extends React.Component {
 	}
 
 	parseText = (text, type, styles, pattern) => {
-		while ((parsed = pattern.exec(text)) !== null) {                        
+		while ((parsed = pattern.exec(text)) !== null) {
+			if(parsed[1] === undefined){
+				continue;
+			}                        
 			this.matchedIndices.push(parsed.index);
 			let spacesToBeAdded = Math.abs(parsed[0].length - parsed[1].length);
 			let spacesStr = ""
@@ -156,7 +161,7 @@ export default class MarkdownFormatter extends React.Component {
             this.matchesStyles.push(styles);
       
             if (type === 'bullet') {
-                parsed[1] = '\u2022 ' + parsed[1];
+                parsed[1] = '\u2022 \t' + parsed[1];
             }
             this.matchesFound.push(parsed);
 
@@ -364,9 +369,7 @@ export default class MarkdownFormatter extends React.Component {
 };
 
 MarkdownFormatter.propTypes = {
-	text: PropTypes.string.isRequired,
-	defaultStyles: PropTypes.array.isRequired,
-	numberOfLines: PropTypes.number.isRequired,
+	text: PropTypes.string.isRequired
 };
 
 const styles = StyleSheet.create({

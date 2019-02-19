@@ -23,6 +23,9 @@ npm install
 react-native run-android/run-ios
 
 ```
+Tip:
+
+- If there is build issue with above command then try running it from Studio/XCode.
 
 ## Usage
 
@@ -34,7 +37,7 @@ import RNMarkdownFormatter from 'react-native-markdown-formatter';
 In your `Component`'s `render()` method you can then render markdown via JSX e.g.
 
 ```js
-// formatter default pattern configs
+// formatter default pattern configs which user doese not have to pass to markdown
 MD_FORMATTER_CONFIG = [
 	{
 		type: 'numbered',
@@ -72,16 +75,27 @@ MD_FORMATTER_CONFIG = [
 		groups: 2,
 	},
 ];
+```
 
 User can send their custom regex also to aply on text
+```js
 // user custom config to be added to default configs
-var customMarkdownFormatterRegex = [{
+var customMarkdownFormatterRegex = [
+	{
 		type: 'bullet', // this will replace the default bullet config with user specified config.
 		styles: [],
-		pattern: ['\\$(?= )(.*?)\\r'],
+		pattern: ['\\$[\\s+](.*?)[\\n|\\r]'],
 		patternType: 'custom',
 		groups: 1,
-}];
+	},
+	{
+		type: 'numbered',
+		styles: [],
+		pattern: ['\\d\\.[\\s+](.*?)[\\n|\\r]'],
+		patternType: 'custom',
+		groups:1,
+	}
+];
 
 //TextBlock styles
 let textBlockComputedStyle = [];
@@ -103,11 +117,13 @@ let exampleTexts = [
 ];
 ```
 ```jsx
-<RNMarkdownFormatter 
-	defaultStyles={textBlockComputedStyle} 
-	numberOfLines={0} // 1(no wrap text) or 0(wrap text)
-	text={exampleText[5]} 
-	regexArray={customMarkdownFormatterRegex}/>
+<View>
+	<RNMarkdownFormatter 
+		defaultStyles={textBlockComputedStyle} 
+		numberOfLines={0} // 1(no wrap text) or 0(wrap text)
+		text={exampleText[5]} 
+		regexArray={customMarkdownFormatterRegex}/>
+</View>
 
 ```
 

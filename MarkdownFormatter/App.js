@@ -61,26 +61,35 @@ const styles = StyleSheet.create({
 
 
 // user custom config to be added to default configs
-var customMarkdownFormatterRegex = [{
-	type: 'bullet', // this will replace the default bullet config with user specified config.
-	styles: [],
-	pattern: ['\\$(?= )(.*?)\\r'],
-	patternType: 'custom',
-	groups: 1,
-}];
-
-let MD_FORMATTER_CONFIG = [
+var customMarkdownFormatterRegex = [
+	{
+		type: 'bullet', // this will replace the default bullet config with user specified config.
+		styles: [],
+		pattern: ['\\$[\\s+](.*?)[\\n|\\r]'],
+		patternType: 'custom',
+		groups: 1,
+	},
 	{
 		type: 'numbered',
 		styles: [],
-		pattern: ["\\d.", '\\r'],
+		pattern: ['\\d\\.[\\s+](.*?)[\\n|\\r]'],
+		patternType: 'custom',
+		groups:1,
+	}
+];
+
+MD_FORMATTER_CONFIG = [
+	{
+		type: 'numbered',
+		styles: [],
+		pattern: ["\\d.", '\\r|\\n'],
 		patternType: 'start-end',
 		groups: 1,
 	},  
 	{
 		type: 'bullet',
 		styles: [],
-		pattern: ['-', '\\r'],
+		pattern: ['-', '\\r|\\n'],
 		patternType: 'start-end',
 		groups: 1,
 	},  
@@ -116,6 +125,7 @@ let exampleTexts = [
 	"This is a custom markdown for bullet list $ Item **1**.1\r$ Item _2.2_\r$ Item 3\r ",
 	"This is a mixed **_bold/italic_** which also supports **_Type_One** _Type**Two**_ text",
 	"This is a mixed lists \n**bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r and _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
+	"Test String: This is a custom markdown for bullet list - ghg  -- Item **1**.1\n---- Item _2.2_\r	- khjhjhj	- Item 3\r- tt\r- new item\r",
 ];
 const FirstRoute = () => (
 	<View style={styles.container}>
@@ -166,11 +176,11 @@ const SixthRoute = () => (
 	<View style={styles.container}>
 		<MarkdownFormatter
 			defaultStyles={[styles.markdown]}
-			numberOfLines={0} // 1 or 0
 			text={exampleTexts[5]}
 			regexArray={customMarkdownFormatterRegex} />
 	</View>
 );
+
 const SeventhRoute = () => (
 	<View style={styles.container}>
 		<MarkdownFormatter
@@ -190,16 +200,9 @@ const EightRoute = () => (
 	</View>
 );
 
-const instructions = Platform.select({
-	ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-	android:
-		'Double tap R on your keyboard to reload,\n' +
-		'Shake or press menu button for dev menu',
-});
-
 export default class App extends React.Component {
 	state = {
-		index: 5,
+		index: 0,
 		routes: [
 			{ key: 'first', title: 'Italic' },
 			{ key: 'second', title: 'Bold' },

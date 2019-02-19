@@ -1,6 +1,10 @@
 
 # react-native-markdown-formatter
 
+### The usage renders in following way:
+
+![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.gif)
+
 ## Getting started
 
 Install the node module:
@@ -37,7 +41,7 @@ import RNMarkdownFormatter from 'react-native-markdown-formatter';
 In your `Component`'s `render()` method you can then render markdown via JSX e.g.
 
 ```js
-// formatter default pattern configs which user doese not have to pass to markdown
+// formatter default pattern configs which user does not have to pass to markdown
 MD_FORMATTER_CONFIG = [
 	{
 		type: 'numbered',
@@ -126,7 +130,3 @@ let exampleTexts = [
 </View>
 
 ```
-
-### The above usage renders in following way:
-
-![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.gif)

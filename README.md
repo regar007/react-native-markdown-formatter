@@ -1,10 +1,6 @@
 
 # react-native-markdown-formatter
 
-### The usage renders in following way:
-
-![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.gif)
-
 ## Getting started
 
 Install the node module:
@@ -130,3 +126,7 @@ let exampleTexts = [
 </View>
 
 ```
+
+### The above usage renders in following way:
+
+![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.gif)

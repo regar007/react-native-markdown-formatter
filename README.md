@@ -5,7 +5,7 @@
 
 A **Customizable Library** for rendering Markdown in React Native with native components, working with both iOS & Android.
 
-Custom markdown for your application is possible now without any regex experince. Just follow the simple guidelines shown bellow.   
+Custom markdown for your application is possible now without any regex learning experince. Just follow the simple guidelines shown bellow.   
 
 ## Getting started
 
@@ -22,7 +22,9 @@ Then see Usage for futher details
 ## Runnning the example code
 
 `$ cd MarkdownFormatter`
+
 `$ npm install`
+
 `$ react-native run-android/run-ios`
 
 Tip:
@@ -65,13 +67,16 @@ To replace or to be added with default config.
     	},
 
     The above pattern will convert 'bullet list $ Item 1.1\r$ Item -2.2-\r$ Item 3\r' in following way: 
-        
+    
+    ```
     bullet list
     . Item 1.1
     . Item -2.2-
     . Item 3
+    ```
     
 *   One can create custom markdown based on project need and render it within text.
+
 *   One can also send the whole regex itself with pattern type 'custom' to apply on text and render it
      
 ## Library Usage

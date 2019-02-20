@@ -3,7 +3,7 @@
 
 [![npm downloads](https://img.shields.io/npm/dm/react-native-markdown-formatter.svg?maxAge=2592000)](https://www.npmjs.com/package/react-native-markdown-formatter)   [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)    [![npm version](https://img.shields.io/npm/v/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)
 
-A **Customizable Library** for rendering Markdown in React Native with native components, working with both iOS & Android.
+A **Customizable Markdown Library** for rendering Markdown in React Native with native components, working with both iOS & Android.
 
 Custom markdown for your application is possible now without any regex learning experince. Just follow the simple guidelines shown bellow.   
 
@@ -38,13 +38,17 @@ Tip:
 * '\*\*bold**' will result in '**bold**'.
 * '\[Title](link)' will result in [Title](link).
 * '- bullet 1\r - bullet2\r - bulltet 3' will result in following way
-    - bullet 1 
-    - bullet2
-    - bullet 3
+   ```
+    . bullet 1 
+    . bullet2
+    . bullet 3
+    ```
 * 1\. numbered 1\r 2. numbered2\n 3. numbered 3' will result in following way
+    ```
     1. numbered 1 
     2. numbered2
     3. numbered 3
+    ```
 
 ### Custom Configurations:
 To replace or to be added with default config.
@@ -56,7 +60,8 @@ To replace or to be added with default config.
     		patternType: 'symmetric',
     		groups:1,
         }
-    The above pattern will convert '\-italic-' will result in '_italic_'.
+	
+    The above pattern will render '\-italic-' in '_italic_'.
 
 *       {
     		type: 'bullet',
@@ -77,13 +82,14 @@ To replace or to be added with default config.
     
 *   One can create custom markdown based on project need and render it within text.
 
-*   One can also send the whole regex itself with pattern type 'custom' to apply on text and render it
+*   One can also send the whole regex itself with pattern type _custom_ to have complete control on markdown to apply regex on text and render it
      
 ## Library Usage
 
 ```javascript
 import RNMarkdownFormatter from 'react-native-markdown-formatter';
 ```
+
 User can send their custom regex and styles also to apply on text.
 ```js
 // user custom config to be added to default configs

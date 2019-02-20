@@ -12,6 +12,7 @@ import {
 import PropTypes from 'prop-types';
 
 let SPECIAL_CHAR_REGEX = new RegExp("[^|a-z\\\\s\\d]", 'gi');
+let NEWLINE_CHAR_REGEX = new RegExp('([\\n|\\r])', 'gi')
 
 export default class MarkdownFormatter extends React.Component {
 
@@ -81,7 +82,9 @@ export default class MarkdownFormatter extends React.Component {
 		for(var i = 0; i < this.MD_FORMATTER_CONFIG.length; i++){
 			for(var j =0; j < this.regexArray.length; j++){
 				if(this.MD_FORMATTER_CONFIG[i].type == this.regexArray[j].type){
+					let mdStyles = this.MD_FORMATTER_CONFIG[i].styles;
 					this.MD_FORMATTER_CONFIG[i] = this.regexArray[j];
+					this.MD_FORMATTER_CONFIG[i].styles.push(mdStyles);
 					this.regexArray.splice(j, 1);
 					continue;					
 				}
@@ -104,7 +107,8 @@ export default class MarkdownFormatter extends React.Component {
                 pattern = pattern[0];
             }
             if(patternType === "start-end"){ 
-                pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '[\\s+](.*?)[' + pattern[1].replace(SPECIAL_CHAR_REGEX, "\\$&")+ "]";
+				//-[\s+]((.*?)[\n|\r](?=-[\s+])|(.*?)$)
+                pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '[\\s]+((.*?)[' + pattern[1].replace(SPECIAL_CHAR_REGEX, "\\$&")+ "](?="+pattern[1].replace(SPECIAL_CHAR_REGEX, '\\$&')+"[\\s]+)|(.*?)$)";
             }else if(patternType == "symmetric"){
                 pattern = pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&") + '(.*?)' + pattern[0].replace(SPECIAL_CHAR_REGEX, "\\$&");    
             }else if(patternType == "asymmetric"){                
@@ -123,10 +127,12 @@ export default class MarkdownFormatter extends React.Component {
 					let secondHalf = group.substring(group.length / 2, group.length);
 					let middle = (j < groups / 2) ? group.substring(0, group.length / 2) : group.substring(group.length / 2, group.length);
 					regex = regex + firstHalf + '([^' + middle + ']+)' + secondHalf;
-				}
+				}  
 				pattern = regex;
-            }
-            this.patterns[i] = RegExp(pattern, 'ig');
+			}
+			// let modifyRegex = new RegExp('(\\\\n|\\\\r)', 'gi')
+			// pattern = pattern.replace(modifyRegex, '\\$&');
+            this.patterns[i] = new RegExp(pattern, 'gim');
 			this.styles[i] = this.regexArray[i].styles;
 			this.styleTypes[i] = this.regexArray[i].type;
 			this.patternTypes[i] = patternType;
@@ -146,6 +152,7 @@ export default class MarkdownFormatter extends React.Component {
 	}
 
 	parseText = (text, type, styles, pattern) => {
+		// var text = text.replace(NEWLINE_CHAR_REGEX, '\\n');
 		while ((parsed = pattern.exec(text)) !== null) {
 			if(parsed[1] === undefined){
 				continue;
@@ -162,7 +169,9 @@ export default class MarkdownFormatter extends React.Component {
       
             if (type === 'bullet') {
                 parsed[1] = '\u2022 \t' + parsed[1];
-            }
+			}
+			// var a = RegExp('(\\\\n)', 'gi')
+			// parsed[1] = parsed[1].replace(a, '');
             this.matchesFound.push(parsed);
 
 		}

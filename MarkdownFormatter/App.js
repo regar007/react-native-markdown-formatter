@@ -13,6 +13,7 @@ import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 // import MarkdownFormatter from 'react-native-markdown-formatter';
 import MarkdownFormatter from '../MarkdownFormatter/src/index'
 
+
 const styles = StyleSheet.create({
 	vertical: {
 		transform: [{ rotate: '90deg'}]
@@ -65,15 +66,15 @@ var customMarkdownFormatterRegex = [
 	{
 		type: 'bullet', // this will replace the default bullet config with user specified config.
 		styles: [],
-		pattern: ['\\$[\\s+](.*?)[\\n|\\r]'],
+		pattern: ['\\$[\\s]+((.*?)[\\n|\\r](?=-[\\s]+)|(.*?)$)'],
 		patternType: 'custom',
 		groups: 1,
 	},
 	{
-		type: 'numbered',
+		type: 'italic',
 		styles: [],
-		pattern: ['\\d\\.[\\s+](.*?)[\\n|\\r]'],
-		patternType: 'custom',
+		pattern: ['-'],
+		patternType: 'symmetric',
 		groups:1,
 	}
 ];
@@ -122,10 +123,10 @@ let exampleTexts = [
 	"This is a [Adaptive Cards](http://adaptivecards.io) hyperlink text",
 	"This is a **bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r ",
 	"This is a _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
-	"This is a custom markdown for bullet list $ Item **1**.1\r$ Item _2.2_\r$ Item 3\r ",
+	"This is a -custom markdown- for bullet list $ Item **1**.1\r$ Item -2.2-\r$ Item 3\r ",
 	"This is a mixed **_bold/italic_** which also supports **_Type_One** _Type**Two**_ text",
 	"This is a mixed lists \n**bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r and _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
-	"Test String: This is a custom markdown for bullet list - ghg  -- Item **1**.1\n---- Item _2.2_\r	- khjhjhj	- Item 3\r- tt\r- new item\r",
+	"Test String: This is a custom markdown for bullet list - Bullet\r - List\r- Item   Hello.      \r-        Last-Item",
 ];
 const FirstRoute = () => (
 	<View style={styles.container}>
@@ -196,13 +197,13 @@ const EightRoute = () => (
 			defaultStyles={[styles.markdown]}
 			numberOfLines={0} // 1 or 0
 			text={exampleTexts[7]}
-			regexArray={[]} />
+			 />
 	</View>
 );
 
 export default class App extends React.Component {
 	state = {
-		index: 0,
+		index: 5,
 		routes: [
 			{ key: 'first', title: 'Italic' },
 			{ key: 'second', title: 'Bold' },
@@ -238,4 +239,22 @@ export default class App extends React.Component {
 		);
 	}
 }
+
+
+
+const markdownStyles = {
+	heading1: {
+	  fontSize: 24,
+	  color: 'purple',
+	},
+	link: {
+	  color: 'pink',
+	},
+	mailTo: {
+	  color: 'orange',
+	},
+	text: {
+	  color: '#555555',
+	},
+  }
 

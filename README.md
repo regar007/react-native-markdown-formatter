@@ -5,7 +5,9 @@
 
 A **Customizable Markdown Library** for rendering Markdown in React Native with native components, working with both iOS & Android.
 
-Custom markdown for your application is possible now without any regex learning experince. Just follow the simple guidelines shown bellow.   
+Custom markdown rules for your application is possible now without any regex learning. Just follow the simple guidelines shown bellow.   
+
+**[Demo](#demo)**
 
 ## Getting started
 
@@ -17,7 +19,7 @@ or with npm:
 
 `$ npm install --save react-native-markdown-formatter`
 
-Then see Usage for futher details
+Then see **[Library Usage](#library-Usage)** for futher details
 
 ## Runnning the example code
 
@@ -184,6 +186,6 @@ MD_FORMATTER_CONFIG = [
 ];
 ```
 
-### The above usage renders in following way:
+### Demo:
 
 ![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.gif)

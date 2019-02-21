@@ -1,7 +1,7 @@
 
 # react-native-markdown-formatter
 
-[![npm downloads](https://img.shields.io/npm/dm/react-native-markdown-formatter.svg?maxAge=2592000)](https://www.npmjs.com/package/react-native-markdown-formatter)   [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)    [![npm version](https://img.shields.io/npm/v/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)
+[![npm downloads](https://img.shields.io/npm/dt/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)   [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)    [![npm version](https://img.shields.io/npm/v/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)
 
 A **Customizable Markdown Library** for rendering Markdown in React Native with native components, working with both iOS & Android.
 
@@ -56,7 +56,7 @@ Tip:
 To replace or to be added with default config.
    
 *       {
-            type: 'italic',
+            	type: 'italic',
     		styles: [],
     		pattern: ['-'],
     		patternType: 'symmetric',
@@ -140,10 +140,13 @@ In your `Component`'s `render()` method you can then render markdown via JSX e.g
 		defaultStyles={textBlockComputedStyle} 
 		numberOfLines={0} // 1(no wrap text) or 0(wrap text)
 		text={exampleText[5]} 
-		regexArray={customMarkdownFormatterRegex}/>
+		regexArray={customMarkdownFormatterRegex} 
+	/>
 </View>
 
 ```
+
+NOTE: 
 
 ```js
 // formatter default pattern configs which user does not have to pass to markdown

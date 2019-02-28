@@ -1,7 +1,9 @@
 
+
 # react-native-markdown-formatter
 
 [![npm downloads](https://img.shields.io/npm/dt/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)   [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)    [![npm version](https://img.shields.io/npm/v/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)
+![GitHub issues](https://img.shields.io/github/issues/regar007/react-native-markdown-formatter.svg)
 
 A **Customizable Markdown Library** for rendering Markdown in React Native with native components, working with both iOS & Android.
 
@@ -19,7 +21,7 @@ or with npm:
 
 `$ npm install --save react-native-markdown-formatter`
 
-Then see **[Library Usage](#library-Usage)** for futher details
+Then see **[Usage](#Usage)** for futher details
 
 ## Runnning the example code
 
@@ -45,7 +47,7 @@ Tip:
     . bullet2
     . bullet 3
     ```
-* 1\. numbered 1\r 2. numbered2\n 3. numbered 3' will result in following way
+* '1\. numbered 1\r 2. numbered2\n 3. numbered 3' will result in following way
     ```
     1. numbered 1 
     2. numbered2
@@ -56,7 +58,7 @@ Tip:
 To replace or to be added with default config.
    
 *       {
-            	type: 'italic',
+            type: 'italic',
     		styles: [],
     		pattern: ['-'],
     		patternType: 'symmetric',
@@ -86,15 +88,41 @@ To replace or to be added with default config.
 
 *   One can also send the whole regex itself with pattern type _custom_ to have complete control on markdown to apply regex on text and render it
      
-## Library Usage
+## Usage
 
 ```javascript
 import RNMarkdownFormatter from 'react-native-markdown-formatter';
+
+let exampleTexts = [
+	"This is a _Italic_ text",
+	"This is a **Bold** text",
+	"This is a [Adaptive Cards](http://adaptivecards.io) hyperlink text",
+	"This is a **bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r ",
+	"This is a _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
+	"This is a custom markdown for bullet list $ Item **1**.1\r$ Item _2.2_\r$ Item 3\r ",
+	"This is a mixed **_bold/italic_** which also supports **_Type_One** _Type**Two**_ text",
+	"This is a mixed lists \n**bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r and _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
+];
+
 ```
 
-User can send their custom regex and styles also to apply on text.
+In your `Component`'s `render()` method you can then render markdown via JSX e.g.
+
+```jsx
+<View>
+	<RNMarkdownFormatter 
+		defaultStyles={[]} // or textBlockComputedStyle
+		numberOfLines={0} // 1(no wrap text) or 0(wrap text)
+		text={exampleText[5]} 
+		regexArray={[]} // or customMarkdownFormatterRegex
+	/>
+</View>
+
+```
+
+**Extra Features**: User can also send their custom regex and styles also to apply on text.
 ```js
-// user custom config to be added to default configs
+//[Optional] user's custom config to be added to default configs
 var customMarkdownFormatterRegex = [
 	{
 		type: 'bullet', // this will replace the default bullet config with user specified config.
@@ -112,37 +140,13 @@ var customMarkdownFormatterRegex = [
 	}
 ];
 
-//TextBlock styles
+//[Optional] TextBlock styles
 let textBlockComputedStyle = [];
 textBlockComputedStyle.push({
 	fontSize: 24,
 	margin: 10,
 	alignItems: 'flex-start'
 );
-
-let exampleTexts = [
-	"This is a _Italic_ text",
-	"This is a **Bold** text",
-	"This is a [Adaptive Cards](http://adaptivecards.io) hyperlink text",
-	"This is a **bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r ",
-	"This is a _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
-	"This is a custom markdown for bullet list $ Item **1**.1\r$ Item _2.2_\r$ Item 3\r ",
-	"This is a mixed **_bold/italic_** which also supports **_Type_One** _Type**Two**_ text",
-	"This is a mixed lists \n**bullet** list - Item **1**.1\r- Item _2.2_\r- Item 3\r and _numbered_ list 1. _Green_\r2. Orange\r3. **Blue**\r",
-];
-```
-
-In your `Component`'s `render()` method you can then render markdown via JSX e.g.
-
-```jsx
-<View>
-	<RNMarkdownFormatter 
-		defaultStyles={textBlockComputedStyle} 
-		numberOfLines={0} // 1(no wrap text) or 0(wrap text)
-		text={exampleText[5]} 
-		regexArray={customMarkdownFormatterRegex} 
-	/>
-</View>
 
 ```
 
@@ -192,3 +196,13 @@ MD_FORMATTER_CONFIG = [
 ### Demo:
 
 ![example](https://raw.githubusercontent.com/regar007/react-native-markdown-formatter/master/example1.gif)
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+[Submit bugs](https://github.com/regar007/react-native-markdown-formatter/issues) and help us verify fixes as they are checked in.

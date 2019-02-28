@@ -203,7 +203,7 @@ const EightRoute = () => (
 
 export default class App extends React.Component {
 	state = {
-		index: 5,
+		index: 0,
 		routes: [
 			{ key: 'first', title: 'Italic' },
 			{ key: 'second', title: 'Bold' },

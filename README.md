@@ -3,7 +3,8 @@
 # react-native-markdown-formatter
 
 [![npm downloads](https://img.shields.io/npm/dt/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)   [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)    [![npm version](https://img.shields.io/npm/v/react-native-markdown-formatter.svg)](https://www.npmjs.com/package/react-native-markdown-formatter)
-![GitHub issues](https://img.shields.io/github/issues/regar007/react-native-markdown-formatter.svg)
+![GitHub issues](https://img.shields.io/github/issues-raw/regar007/react-native-markdown-formatter.svg)
+![GitHub issues](https://img.shields.io/github/issues-closed-raw/regar007/react-native-markdown-formatter.svg)
 
 A **Customizable Markdown Library** for rendering Markdown in React Native with native components, working with both iOS & Android.
 

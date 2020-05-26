@@ -34,5 +34,6 @@
   },
   "dependencies": {
     "react-scripts": "1.1.4"
-  }
+  },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }

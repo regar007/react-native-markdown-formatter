@@ -1,7 +1,7 @@
 
 {
   "name": "react-native-markdown-formatter",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "This is a react-native library to apply desired regex to plain text.",
   "main": "MarkdownFormatter/src/index.js",
   "files":[

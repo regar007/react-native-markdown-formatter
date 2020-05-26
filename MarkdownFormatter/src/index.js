@@ -156,7 +156,10 @@ export default class MarkdownFormatter extends React.Component {
 		while ((parsed = pattern.exec(text)) !== null) {
 			if(parsed[1] === undefined){
 				continue;
-			}                        
+			}    
+			if(parsed[1] === ''){
+				continue;
+			}                    
 			this.matchedIndices.push(parsed.index);
 			let spacesToBeAdded = Math.abs(parsed[0].length - parsed[1].length);
 			let spacesStr = ""
@@ -174,7 +177,7 @@ export default class MarkdownFormatter extends React.Component {
 			// parsed[1] = parsed[1].replace(a, '');
             this.matchesFound.push(parsed);
 
-		}
+		}		
 
 		return text;
 	}
@@ -203,6 +206,21 @@ export default class MarkdownFormatter extends React.Component {
 			for (var i = 0; i <= this.matchedIndices.length - 1; i++) {
 				if (this.matchesFound[i]) {
 					console.log("match : " + this.matchesFound[i]);
+					// check if this is part of higer level regex exist eg. # is part of ##
+					const match = this.matchesFound[i];
+					if(match[1] === ''){
+						let partial = false;
+						for (let f = 0; f < this.matchesFound.length; f++) {
+							const found = this.matchesFound[f];
+							if(found[0].indexOf(match[0]) !== -1 && found[1] !== ''){
+								partial = true;
+							}							
+						}
+						if(partial){
+							continue;
+						}
+					}
+
 					idx = this.matchedIndices.indexOf(sortedMatchedIndices[i]);
 
 					//check if previous elementJsxArray is or has the current match
